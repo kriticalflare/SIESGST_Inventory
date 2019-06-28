@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_icon"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"
+        />
+    <item
+        android:id="@+id/search_icon"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search"
+        />
+    <item
+        android:id="@+id/pallet_icon"
+        android:icon="@drawable/ic_shopping_basket_black_24dp"
+        android:title="Pallet"/>
+
+</menu>

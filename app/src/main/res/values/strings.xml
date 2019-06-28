@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Inventory</string>
+    <string-array name="category">
+        <item>Equipments</item>
+        <item>Chassis</item>
+        <item>Motors</item>
+        <item>ICs</item>
+        <item>Modules</item>
+        <item>Wires</item>
+        <item>Components</item>
+        <item>Others</item>
+    </string-array>
+
+</resources>

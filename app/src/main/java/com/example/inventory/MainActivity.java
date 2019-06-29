@@ -1,10 +1,8 @@
 package com.example.inventory;
 
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
 
 
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.inventory.Adapter.Slider_Adpater;
+import com.example.inventory.Adapter.Slider_Adapter;
 import com.example.inventory.AdminClass.Admin_Main;
 import com.example.inventory.UserClass.User_Main;
 
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private LinearLayout bottomlayout;
-    private Slider_Adpater slider_adpater ;
+    private Slider_Adapter slider_adapter;
     private TextView[] mDots ;
     private Button nextButton,backButton,userlogin,adminlogin;
     private int CurrentPage ;
@@ -40,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         userlogin = (Button)findViewById(R.id.userlogin);
         adminlogin =(Button)findViewById(R.id.adminlogin);
 
-        slider_adpater = new Slider_Adpater(this);
-        viewPager.setAdapter(slider_adpater);
+        slider_adapter = new Slider_Adapter(this);
+        viewPager.setAdapter(slider_adapter);
         addDotsIndicator(0);
         viewPager.addOnPageChangeListener(viewPagelistener);
 

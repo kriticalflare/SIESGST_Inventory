@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.example.inventory.R;
 
-public class Slider_Adpater extends PagerAdapter {
+public class Slider_Adapter extends PagerAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
 
-    public Slider_Adpater(Context context){
+    public Slider_Adapter(Context context){
         this.context = context;
     }
 

@@ -1,24 +1,27 @@
 package com.example.inventory.AdminClass;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.inventory.Models.ComponentModel;
+import com.example.inventory.Models.LogsModel;
 import com.example.inventory.R;
-import com.example.inventory.SQLiteHelpers.DatabaseHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 
@@ -28,8 +31,10 @@ public class AddComponentBottomSheet extends BottomSheetDialogFragment {
     private Button addComp;
     private Spinner category_spinner;
     private EditText components,count,admin_name;
-    private DatabaseHelper dbHelp;
 
+    FirebaseDatabase firedata;
+    DatabaseReference firerefComponets;
+    DatabaseReference firerefLogs;
 
     @Nullable
     @Override
@@ -38,38 +43,66 @@ public class AddComponentBottomSheet extends BottomSheetDialogFragment {
 
         components = (EditText)v.findViewById(R.id.add_components);
         count = (EditText) v.findViewById(R.id.count_edit);
-        admin_name = (EditText)v.findViewById(R.id.admin_name);
         addComp = (Button)v.findViewById(R.id.submit_components);
-        category_spinner =(Spinner)v.findViewById(R.id.category_spinner);
 
-        ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.category,android.R.layout.simple_spinner_item);
-        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        category_spinner.setAdapter(spinner_adapter);
-
-        dbHelp = new DatabaseHelper(getContext());
-
-
+        firedata = FirebaseDatabase.getInstance();
+        firerefComponets =firedata.getReference("Components");
+        firerefLogs = firedata.getReference("Logs");
 
         addComp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long date = System.currentTimeMillis();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy , h:mm a");
-                String dateString = sdf.format(date);
-                String category_selected = category_spinner.getSelectedItem().toString();
-                ComponentModel newcomp = new ComponentModel(
-                        components.getText().toString().trim(),
-                        dateString,
-                        category_selected.trim(),
-                        Integer.parseInt(count.getText().toString().trim()),
-                        admin_name.getText().toString().trim());
-                boolean comp_inserted = dbHelp.insertComponent(newcomp);
-                if(comp_inserted ==true)
-                    Toast.makeText(getContext()," Data Inserted",Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getContext(),"Data Not Inserted",Toast.LENGTH_SHORT).show();
-                dismiss();
+                if(TextUtils.isEmpty(components.getText().toString())){
+                    components.setError("Enter Components");
+                }
+                else if (TextUtils.isEmpty(count.getText().toString())){
+                    count.setError("Enter Count");
+                }
+                else {
+                    long date = System.currentTimeMillis();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy , h:mm:ss a");
+                    final String dateString = sdf.format(date);
+                    final ComponentModel newcomponent = new ComponentModel(components.getText().toString(),
+                            "Admin",Integer.parseInt(count.getText().toString()));
+                    final LogsModel newLog = new LogsModel("Admin",components.getText().toString(),
+                            dateString,Integer.parseInt(count.getText().toString()),0);
+                    firerefComponets.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            firerefComponets.child(newcomponent.getAdder()).child(newcomponent.getComponent())
+                                    .child("count").setValue(newcomponent.getCount());
+                            firerefComponets.child(newcomponent.getAdder()).child(newcomponent.getComponent())
+                                    .child("component").setValue(newcomponent.getComponent());
+                            firerefComponets.child(newcomponent.getAdder()).child(newcomponent.getComponent())
+                                    .child("adder").setValue(newcomponent.getAdder());
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    firerefLogs.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            firerefLogs.child(String.valueOf(dateString))
+                                    .child("Uname").setValue(newLog.getUname());
+                            firerefLogs.child(String.valueOf(dateString))
+                                    .child("Component").setValue(newLog.getComponent());
+                            firerefLogs.child(String.valueOf(dateString))
+                                    .child("Count").setValue(newLog.getCount());
+                            firerefLogs.child(String.valueOf(dateString))
+                                    .child("LogType").setValue(newLog.getLogtype());
+                            firerefLogs.child(String.valueOf(dateString))
+                                    .child("datetime").setValue(newLog.getDatetime());
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Toast.makeText(getContext(),"Data Inserted",Toast.LENGTH_LONG).show();
+                    dismiss();
+                }
             }
         });
 

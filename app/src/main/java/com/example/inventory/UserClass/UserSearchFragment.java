@@ -2,7 +2,6 @@ package com.example.inventory.UserClass;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,14 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import com.example.inventory.Adapter.Admin_Home_Adapter;
 import com.example.inventory.R;
-import com.example.inventory.SQLiteHelpers.DatabaseHelper;
 
 public class UserSearchFragment extends Fragment {private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     SQLiteDatabase componentDatabase;
-    Admin_Home_Adapter user_search_adapter;
     RecyclerView search_recycler;
 
     @Nullable
@@ -34,13 +30,7 @@ public class UserSearchFragment extends Fragment {private SearchView searchView 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_search_fragment,container,false);
         search_recycler = (RecyclerView)view.findViewById(R.id.user_search_recycler);
-
-
-        DatabaseHelper dbHelp = new DatabaseHelper(getContext());
-        componentDatabase =dbHelp.getWritableDatabase();
         search_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        user_search_adapter = new Admin_Home_Adapter(getContext(),dbHelp.getAllComponents());
-        search_recycler.setAdapter(user_search_adapter);
 
         return view;
     }
@@ -84,11 +74,8 @@ public class UserSearchFragment extends Fragment {private SearchView searchView 
     }
 
     private void searhComponets (String keyword){
-        DatabaseHelper dbHelp = new DatabaseHelper(getContext());
-        Cursor componentsCursor = dbHelp.searchComponents(keyword);
-        if(componentsCursor != null){
-            search_recycler.setAdapter( new Admin_Home_Adapter(getContext(),componentsCursor));
-        }
+
+
     }
 
     @Override

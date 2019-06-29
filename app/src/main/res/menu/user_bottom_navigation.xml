@@ -11,9 +11,5 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
         />
-    <item
-        android:id="@+id/pallet_icon"
-        android:icon="@drawable/ic_shopping_basket_black_24dp"
-        android:title="Pallet"/>
 
 </menu>

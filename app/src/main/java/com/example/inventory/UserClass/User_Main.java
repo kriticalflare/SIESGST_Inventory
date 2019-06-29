@@ -38,10 +38,6 @@ public class User_Main extends AppCompatActivity {
                         case R.id.search_icon:
                             selectedFragment = new UserSearchFragment();
                             break;
-                        case R.id.pallet_icon:
-                            selectedFragment = new UserPalletFragment();
-                            break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();

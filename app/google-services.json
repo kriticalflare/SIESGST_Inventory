@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "215751279497",
+    "firebase_url": "https://siesgst-inventory.firebaseio.com",
+    "project_id": "siesgst-inventory",
+    "storage_bucket": "siesgst-inventory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215751279497:android:3cded60a8ed0b07e",
+        "android_client_info": {
+          "package_name": "com.example.inventory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215751279497-pg4sv4oaen27ivfppmbe7fo272sjt2pd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.inventory",
+            "certificate_hash": "3e65845c301c74477adb6cca8b11538012565a60"
+          }
+        },
+        {
+          "client_id": "215751279497-ltejk56cd8ns1f9k0di1er4vpv4d6puc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARfpES228pdBmn731HGn1PWXyUI2lvsNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215751279497-ltejk56cd8ns1f9k0di1er4vpv4d6puc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

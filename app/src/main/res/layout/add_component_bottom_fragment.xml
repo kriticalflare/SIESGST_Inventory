@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -39,73 +40,44 @@
         />
 
     <TextView
-        android:id="@+id/category_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Category"
-        app:layout_constraintTop_toBottomOf="@id/add_components"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="20sp"
-        />
-    <Spinner
-        android:id="@+id/category_spinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/category_heading"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_components"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="20dp"
-        >
-    </Spinner>
-    <TextView
         android:id="@+id/count_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/category_heading"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Enter Count"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="18dp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/submit_components"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_components" />
+
     <EditText
+        android:id="@+id/count_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="8dp"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/submit_components"
         app:layout_constraintLeft_toRightOf="@+id/count_heading"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category_spinner"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="number"
-        android:id="@+id/count_edit"
-        />
-    <EditText
-        android:id="@+id/admin_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/count_edit"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:hint="Enter Admin Name"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/add_components" />
+
     <Button
         android:id="@+id/submit_components"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/admin_name"
         android:layout_margin="20dp"
-        android:text="Add Components"
-        android:background="@drawable/gradient_rounded_button"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="18sp"
         android:layout_marginBottom="30dp"
+        android:background="@drawable/gradient_rounded_button"
+        android:text="Add Components"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        tools:layout_editor_absoluteX="20dp" />
 
 </android.support.constraint.ConstraintLayout>

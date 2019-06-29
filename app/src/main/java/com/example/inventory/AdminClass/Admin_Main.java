@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.inventory.R;
-import com.example.inventory.SQLiteHelpers.DatabaseHelper;
 
 public class Admin_Main extends AppCompatActivity  {
 

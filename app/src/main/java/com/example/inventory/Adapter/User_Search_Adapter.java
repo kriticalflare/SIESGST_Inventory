@@ -11,21 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.inventory.R;
-import com.example.inventory.SQLiteHelpers.DatabaseContract;
 
 public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapter.
         User_Search_View_Holder> {
     private Context context;
-    private Cursor cursor;
+
     Dialog requestDialog;
-    public User_Search_Adapter(Context context,Cursor cursor){
+    public User_Search_Adapter(Context context){
         this.context = context ;
-        this.cursor = cursor;
     }
     @NonNull
     @Override
@@ -66,39 +63,13 @@ public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapte
 
 
 
-        if(!cursor.moveToPosition(i)){
-            return;
-        }
-
-        String components = cursor.getString(cursor.getColumnIndex(DatabaseContract.DatabaseEntry.COMPONENTS_COMP));
-        String categorys  = cursor.getString(cursor.getColumnIndex(DatabaseContract.DatabaseEntry.COMPONENTS_CAT));
-        String dates = cursor.getString(cursor.getColumnIndex(DatabaseContract.DatabaseEntry.COMPONENTS_DATE));
-        Integer counts  = cursor.getInt(cursor.getColumnIndex(DatabaseContract.DatabaseEntry.COMPONENTS_COUNT));
-        String admins = cursor.getString(cursor.getColumnIndex(DatabaseContract.DatabaseEntry.COMPONENTS_ADMIN));
-
-        user_search_view_holder.component.setText(components);
-        user_search_view_holder.category.setText(categorys);
-        user_search_view_holder.date.setText(dates);
-        user_search_view_holder.count.setText(counts.toString());
-        user_search_view_holder.admin.setText(admins);
-
     }
 
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+        return 0;
     }
 
-    public void swapcursor(Cursor newCursor){
-        if(cursor !=null ){
-            cursor.close();
-        }
-        cursor = newCursor;
-        if (newCursor != null){
-            notifyDataSetChanged();
-        }
-
-    }
 
     public class User_Search_View_Holder extends RecyclerView.ViewHolder{
 

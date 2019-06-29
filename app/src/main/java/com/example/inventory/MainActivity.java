@@ -1,6 +1,7 @@
 package com.example.inventory;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 
 
@@ -18,15 +19,25 @@ import android.widget.TextView;
 import com.example.inventory.Adapter.Slider_Adpater;
 import com.example.inventory.AdminClass.Admin_Main;
 import com.example.inventory.UserClass.User_Main;
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private ViewPager viewPager;
     private LinearLayout bottomlayout;
     private Slider_Adpater slider_adpater ;
     private TextView[] mDots ;
-    private Button nextButton,backButton,userlogin,adminlogin;
+    private Button nextButton,backButton;
     private int CurrentPage ;
+    private TextView GbutText;
+
+    private SignInButton GsignIn;
+    private GoogleApiClient googleApiClient ;
+    private static final int REQ_CODE = 9001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
         bottomlayout  = (LinearLayout) findViewById(R.id.bottomlayout);
         nextButton = (Button)findViewById(R.id.nextbutton);
         backButton = (Button) findViewById(R.id.backbutton);
-        userlogin = (Button)findViewById(R.id.userlogin);
-        adminlogin =(Button)findViewById(R.id.adminlogin);
+        GsignIn = (SignInButton)findViewById(R.id.google_sign);
+        GsignIn.setVisibility(View.INVISIBLE);
+        GsignIn.setOnClickListener(this);
+        TextView  GbutText  = (TextView) GsignIn.getChildAt(0);
+        GbutText.setText("Sign In With GST ID");
 
         slider_adpater = new Slider_Adpater(this);
         viewPager.setAdapter(slider_adpater);
@@ -57,22 +71,17 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(CurrentPage -1);
             }
         });
-        adminlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent adminintent = new Intent(getApplicationContext(), Admin_Main.class);
-                startActivity(adminintent);
-                finish();
-            }
-        });
-        userlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent userintent = new Intent(getApplicationContext(), User_Main.class);
-                startActivity(userintent);
-                finish();
-            }
-        });
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -113,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
                  nextButton.setEnabled(true);
                  backButton.setEnabled(false);
                  backButton.setVisibility(View.INVISIBLE);
-                 userlogin.setVisibility(View.INVISIBLE);
-                 adminlogin.setVisibility(View.INVISIBLE);
+                 GsignIn.setVisibility(View.INVISIBLE);
                  nextButton.setText("Next");
                  backButton.setText("");
              }else if ( i == mDots.length -1){
@@ -122,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
                  backButton.setEnabled(false);
                  backButton.setVisibility(View.INVISIBLE);
                  nextButton.setVisibility(View.INVISIBLE);
-                 userlogin.setVisibility(View.VISIBLE);
-                 adminlogin.setVisibility(View.VISIBLE);
+                 GsignIn.setVisibility(View.VISIBLE);
              }else {
                  nextButton.setEnabled(true);
                  backButton.setEnabled(true);
@@ -131,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                  nextButton.setVisibility(View.VISIBLE);
                  nextButton.setText("Next");
                  backButton.setText("Back");
-                 userlogin.setVisibility(View.INVISIBLE);
-                 adminlogin.setVisibility(View.INVISIBLE);
+                 GsignIn.setVisibility(View.INVISIBLE);
              }
 
         }
@@ -142,4 +148,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }

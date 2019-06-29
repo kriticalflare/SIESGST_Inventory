@@ -1,7 +1,6 @@
 package com.example.inventory;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 
 
@@ -16,7 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.inventory.Adapter.Slider_Adpater;
+import com.example.inventory.Adapter.Slider_Adapter;
 import com.example.inventory.AdminClass.Admin_Main;
 import com.example.inventory.UserClass.User_Main;
 import com.google.android.gms.auth.api.signin.GoogleSignInApi;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ViewPager viewPager;
     private LinearLayout bottomlayout;
-    private Slider_Adpater slider_adpater ;
+    private Slider_Adapter slider_adapter;
     private TextView[] mDots ;
     private Button nextButton,backButton;
     private int CurrentPage ;
@@ -54,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView  GbutText  = (TextView) GsignIn.getChildAt(0);
         GbutText.setText("Sign In With GST ID");
 
-        slider_adpater = new Slider_Adpater(this);
-        viewPager.setAdapter(slider_adpater);
+        slider_adapter = new Slider_Adapter(this);
+        viewPager.setAdapter(slider_adapter);
         addDotsIndicator(0);
         viewPager.addOnPageChangeListener(viewPagelistener);
 

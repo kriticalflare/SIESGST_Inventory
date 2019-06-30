@@ -1,0 +1,57 @@
+package com.example.inventory.Adapter;
+
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.inventory.Models.LogsModel;
+import com.example.inventory.R;
+
+import java.util.ArrayList;
+
+public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.Admin_Logs_ViewHolder> {
+
+    ArrayList<LogsModel> logModel;
+
+    public Admin_Logs_Adapter(ArrayList<LogsModel> logModel){
+        this.logModel = logModel;
+    }
+
+    @NonNull
+    @Override
+    public Admin_Logs_ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_logs_recycler_card,viewGroup,false);
+        Admin_Logs_ViewHolder adminLViewHold = new Admin_Logs_ViewHolder(view);
+        return adminLViewHold;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull Admin_Logs_Adapter.Admin_Logs_ViewHolder admin_logs_viewHolder, int i) {
+        admin_logs_viewHolder.Component.setText(logModel.get(i).getComponent());
+        admin_logs_viewHolder.Count.setText(String.valueOf(logModel.get(i).getCount()));
+        admin_logs_viewHolder.Uname.setText(logModel.get(i).getUname());
+        admin_logs_viewHolder.Time.setText(logModel.get(i).getDatetime());
+    }
+
+    @Override
+    public int getItemCount() {
+        return logModel.size();
+    }
+
+    class Admin_Logs_ViewHolder extends RecyclerView.ViewHolder{
+        TextView Component,Count,Uname,Time;
+
+
+        public Admin_Logs_ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            Component = itemView.findViewById(R.id.admin_logs_card_component);
+            Count = itemView.findViewById(R.id.admin_logs_card_count);
+            Uname = itemView.findViewById(R.id.admin_logs_card_uname);
+            Time = itemView.findViewById(R.id.admin_logs_time);
+        }
+    }
+
+}

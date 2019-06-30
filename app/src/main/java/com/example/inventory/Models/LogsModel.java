@@ -2,6 +2,16 @@ package com.example.inventory.Models;
 
 public class LogsModel {
 
+    public LogsModel(){}
+
+    public LogsModel(String uname, String component, String datetime, int count,int logtype) {
+        this.uname = uname;
+        this.component = component;
+        this.datetime = datetime;
+        this.count = count;
+        this.logtype =logtype;
+    }
+
     public String getUname() {
         return uname;
     }
@@ -34,17 +44,6 @@ public class LogsModel {
         this.count = count;
     }
 
-    public LogsModel(String uname, String component, String datetime, int count,int logtype) {
-        this.uname = uname;
-        this.component = component;
-        this.datetime = datetime;
-        this.count = count;
-        this.logtype =logtype;
-    }
-
-    String uname,component,datetime;
-    int count;
-
     public int getLogtype() {
         return logtype;
     }
@@ -52,6 +51,6 @@ public class LogsModel {
     public void setLogtype(int logtype) {
         this.logtype = logtype;
     }
-
-    int logtype;
+    String uname,component,datetime;
+    int count,logtype;
 }

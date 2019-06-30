@@ -5,12 +5,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:id="@+id/admin_logs_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="Admin Logs"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/admin_logs_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin_logs_heading"
+        android:layout_margin="10dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        >
+
+    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

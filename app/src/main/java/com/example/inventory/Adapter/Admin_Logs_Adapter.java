@@ -1,5 +1,6 @@
 package com.example.inventory.Adapter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,21 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
         admin_logs_viewHolder.Count.setText(String.valueOf(logModel.get(i).getCount()));
         admin_logs_viewHolder.Uname.setText(logModel.get(i).getUname());
         admin_logs_viewHolder.Time.setText(logModel.get(i).getDatetime());
+        //admin_logs_viewHolder.LogType.setText(String.valueOf(logModel.get(i).getLogtype()));
+        switch (logModel.get(i).getLogtype()){
+            case 0:
+                 admin_logs_viewHolder.LogType.setText("ACCEPTED");
+                 admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
+                 break;
+            case 1:
+                 admin_logs_viewHolder.LogType.setText("REJECTED");
+                 admin_logs_viewHolder.LogType.setTextColor(Color.RED);
+                 break;
+            case 2:
+                 admin_logs_viewHolder.LogType.setText("ADDED");
+                 admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
+                 break;
+        }
     }
 
     @Override
@@ -42,7 +58,7 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
     }
 
     class Admin_Logs_ViewHolder extends RecyclerView.ViewHolder{
-        TextView Component,Count,Uname,Time;
+        TextView Component,Count,Uname,Time,LogType;
 
 
         public Admin_Logs_ViewHolder(@NonNull View itemView) {
@@ -51,6 +67,7 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
             Count = itemView.findViewById(R.id.admin_logs_card_count);
             Uname = itemView.findViewById(R.id.admin_logs_card_uname);
             Time = itemView.findViewById(R.id.admin_logs_time);
+            LogType = itemView.findViewById(R.id.admin_logs_card_type);
         }
     }
 

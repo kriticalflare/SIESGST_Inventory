@@ -85,13 +85,13 @@ public class AddComponentBottomSheet extends BottomSheetDialogFragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             firerefLogs.child(String.valueOf(dateString))
-                                    .child("Uname").setValue(newLog.getUname());
+                                    .child("uname").setValue(newLog.getUname());
                             firerefLogs.child(String.valueOf(dateString))
-                                    .child("Component").setValue(newLog.getComponent());
+                                    .child("component").setValue(newLog.getComponent());
                             firerefLogs.child(String.valueOf(dateString))
-                                    .child("Count").setValue(newLog.getCount());
+                                    .child("count").setValue(newLog.getCount());
                             firerefLogs.child(String.valueOf(dateString))
-                                    .child("LogType").setValue(newLog.getLogtype());
+                                    .child("logtype").setValue(newLog.getLogtype());
                             firerefLogs.child(String.valueOf(dateString))
                                     .child("datetime").setValue(newLog.getDatetime());
                         }

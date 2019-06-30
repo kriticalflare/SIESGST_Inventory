@@ -55,16 +55,16 @@ public class MainActivity extends AppCompatActivity  {
     DatabaseReference refLogin;
     ArrayList<LoginModel> loginlist;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        updateUI(account);
+//    }
 
 
     @Override
@@ -80,27 +80,28 @@ public class MainActivity extends AppCompatActivity  {
         GsignIn.setVisibility(View.INVISIBLE);
         TextView  GbutText  = (TextView) GsignIn.getChildAt(0);
         GbutText.setText("Sign In With GST ID");
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        refLogin = FirebaseDatabase.getInstance().getReference("Login");
-        refLogin.keepSynced(true);
-        if(refLogin!=null){
-            refLogin.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        loginlist = new ArrayList<>();
-                        for(DataSnapshot ds: dataSnapshot.getChildren()){
-                            loginlist.add(ds.getValue(LoginModel.class));
-                        }
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(),"CANCELLED",Toast.LENGTH_SHORT).show();
 
-                }
-            });
-        }
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        refLogin = FirebaseDatabase.getInstance().getReference("Login");
+//        refLogin.keepSynced(true);
+//        if(refLogin!=null){
+//            refLogin.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    if(dataSnapshot.exists()){
+//                        loginlist = new ArrayList<>();
+//                        for(DataSnapshot ds: dataSnapshot.getChildren()){
+//                            loginlist.add(ds.getValue(LoginModel.class));
+//                        }
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    Toast.makeText(getApplicationContext(),"CANCELLED",Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+//        }
         GsignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity  {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI(account);
+
         slider_adapter = new Slider_Adapter(this);
         viewPager.setAdapter(slider_adapter);
         addDotsIndicator(0);
@@ -133,26 +138,40 @@ public class MainActivity extends AppCompatActivity  {
 
     private void updateUI(GoogleSignInAccount account) {
         if (account != null) {
-            if (loginlist != null) {
-                for (LoginModel object : loginlist) {
-                    if (object.getEmail().contains(account.getEmail())) {
-                        if (object.getStatus().equals("admin")) {
-                            Toast.makeText(getApplicationContext(), account.getEmail(), Toast.LENGTH_SHORT).show();
-                            Intent adminIntent = new Intent(this, Admin_Main.class);
-                            startActivity(adminIntent);
-                            finish();
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), account.getEmail(), Toast.LENGTH_SHORT).show();
-                            Intent userIntent = new Intent(this, User_Main.class);
-                            userIntent.putExtra("ACCOUNT", account);
-                            startActivity(userIntent);
-                            finish();
-
-                        }
-                    }
-                }
+            if(account.getEmail().equals("karthiknaiduraj@gmail.com") || account.getEmail().equals("krithiksuvarna@gmail.com")) {
+                    Toast.makeText(getApplicationContext(), account.getEmail(), Toast.LENGTH_SHORT).show();
+                    Intent adminIntent = new Intent(this, Admin_Main.class);
+                    startActivity(adminIntent);
+                    finish();
             }
+            else {
+                Toast.makeText(getApplicationContext(), account.getEmail(), Toast.LENGTH_SHORT).show();
+                Intent userIntent = new Intent(this, User_Main.class);
+                userIntent.putExtra("ACCOUNT", account);
+                startActivity(userIntent);
+                finish();
+
+            }
+//            if (loginlist != null) {
+//                for (LoginModel object : loginlist) {
+//                    if (object.getEmail().contains(account.getEmail())) {
+//                        if (object.getStatus().equals("admin")) {
+//                            Toast.makeText(getApplicationContext(), account.getEmail(), Toast.LENGTH_SHORT).show();
+//                            Intent adminIntent = new Intent(this, Admin_Main.class);
+//                            startActivity(adminIntent);
+//                            finish();
+//                        }
+//                        else {
+//                            Toast.makeText(getApplicationContext(), account.getEmail(), Toast.LENGTH_SHORT).show();
+//                            Intent userIntent = new Intent(this, User_Main.class);
+//                            userIntent.putExtra("ACCOUNT", account);
+//                            startActivity(userIntent);
+//                            finish();
+//
+//                        }
+//                    }
+//                }
+//            }
         }
     }
     private void signIn() {Intent signInIntent = mGoogleSignInClient.getSignInIntent();

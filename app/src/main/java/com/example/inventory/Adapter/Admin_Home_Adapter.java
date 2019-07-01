@@ -52,7 +52,7 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
                 admin_dialog_admin.setText(componentModel.get(adminViewHold.getLayoutPosition()).getAdder());
                 admin_dialog_count.setText(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
 
-                homeDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+                homeDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 homeDialog.show();
             }
         });

@@ -61,9 +61,6 @@ public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapte
                 final Dialog dialog = new Dialog(user_search_viewHolder.context);
                 dialog.setContentView(R.layout.user_component_request_dialog);
                 dialog.setTitle("Request");
-                TextView com
-
-
 
 
 

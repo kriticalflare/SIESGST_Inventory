@@ -7,15 +7,27 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.inputmethodservice.KeyboardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.cardview.widget.CardView;
 
 
 import com.example.inventory.Models.ComponentModel;
 import com.example.inventory.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.view.Change;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,6 +35,7 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
 
     ArrayList<ComponentModel> componentModel;
     private Context context;
+    Button button;
 
     Dialog homeDialog;
     public Admin_Home_Adapter(ArrayList<ComponentModel> componentModel, Context context) {
@@ -45,17 +58,50 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
                 TextView admin_dialog_component = (TextView)homeDialog.findViewById(R.id.admin_dialog_component);
                 TextView admin_dialog_quantity = (TextView)homeDialog.findViewById(R.id.admin_dialog_quantity);
                 TextView admin_dialog_admin = (TextView)homeDialog.findViewById(R.id.admin_dialog_admin);
-                TextView admin_dialog_count = (TextView)homeDialog.findViewById(R.id.admin_count);
+                EditText admin_dialog_count = (EditText) homeDialog.findViewById(R.id.admin_count);
+
+                //String  number = admin_dialog_count.getText().toString();
+                //int number2 = Integer.parseInt(number);
 
                 admin_dialog_component.setText(componentModel.get(adminViewHold.getLayoutPosition()).getComponent());
                 admin_dialog_quantity.setText(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
                 admin_dialog_admin.setText(componentModel.get(adminViewHold.getLayoutPosition()).getAdder());
-                admin_dialog_count.setText(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
+                admin_dialog_count.setHint(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
 
                 homeDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
                 homeDialog.show();
             }
         });
+
+        button = homeDialog.findViewById(R.id.admin_dialog_change);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText admin_dialog_count = (EditText) homeDialog.findViewById(R.id.admin_count);
+                TextView admin_dialog_component = (TextView)homeDialog.findViewById(R.id.admin_dialog_component);
+                if(admin_dialog_count.getText().toString() == null){
+                    admin_dialog_count.setError("Enter a value");
+                }
+                if(TextUtils.isEmpty(admin_dialog_count.getText().toString())){
+                    admin_dialog_count.setError("Enter new count");
+                }else {
+                    String item = admin_dialog_component.getText().toString();
+                    String countString = admin_dialog_count.getText().toString();
+                    int count = Integer.parseInt(countString);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = database.getReference("Components");
+                    databaseReference.child("Admin").child(item).child("count").setValue(count);
+                    //int ActualCount = Integer.parseInt(count);
+                    //String test = admin_dialog_component.getText().toString();
+                    //Toast toast = new Toast(context).makeText(context,"number is "+ test +" .",Toast.LENGTH_SHORT);
+                    //toast.show();
+
+                }
+
+                homeDialog.dismiss();
+            }
+        });
+
 
         return adminViewHold;
     }

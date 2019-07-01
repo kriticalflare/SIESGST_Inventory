@@ -75,12 +75,12 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                 final Dialog dialog = new Dialog(holder.context);
                 dialog.setContentView(R.layout.admin_requests_dialog);
                 dialog.setTitle("Request");
-                TextView components = dialog.findViewById(R.id.request_dialog_component);
+                final TextView components = dialog.findViewById(R.id.request_dialog_component);
                 TextView user_name = dialog.findViewById(R.id.request_dialog_uname);
                 TextView user_email = dialog.findViewById(R.id.request_dialog_uemail);
                 TextView datelog = dialog.findViewById(R.id.request_dialog_datetime);
-                TextView request_count = dialog.findViewById(R.id.request_dialog_requestcount);
-                TextView avail_count = dialog.findViewById(R.id.request_dialog_availcount);
+                final TextView request_count = dialog.findViewById(R.id.request_dialog_requestcount);
+                final TextView avail_count = dialog.findViewById(R.id.request_dialog_availcount);
                 TextView dialogheading = dialog.findViewById(R.id.dialog_heading);
                 Button positivebut = dialog.findViewById(R.id.request_dialog_accept_request);
                 Button negativebut = dialog.findViewById(R.id.request_dialog_reject_request);
@@ -111,9 +111,13 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                             Integer.parseInt(availcointval) + Integer.parseInt(requestcountval)
                                     );
 
-
-
-
+                                    DatabaseReference Logsref;
+                                    Logsref = FirebaseDatabase.getInstance().getReference("Logs");
+                                    Logsref.child(datetimeval).child("component").setValue(componentval);
+                                    Logsref.child(datetimeval).child("count").setValue(request_count);
+                                    Logsref.child(datetimeval).child("datetime").setValue(datetimeval);
+                                    Logsref.child(datetimeval).child("logtype").setValue(3);
+                                    Logsref.child(datetimeval).child("uname").setValue(unameval);
                                     Toast.makeText(context,"return accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
@@ -125,6 +129,14 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                 public void onClick(View v) {
                                     Toast.makeText(context,"request accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
+                                    DatabaseReference Logsref;
+                                    Logsref = FirebaseDatabase.getInstance().getReference("Logs");
+                                    Logsref.child(datetimeval).child("component").setValue(componentval);
+                                    Logsref.child(datetimeval).child("count").setValue(request_count);
+                                    Logsref.child(datetimeval).child("datetime").setValue(datetimeval);
+                                    Logsref.child(datetimeval).child("logtype").setValue(1);
+                                    Logsref.child(datetimeval).child("uname").setValue(unameval);
+
                                     DatabaseReference myref;
                                     myref =  FirebaseDatabase.getInstance().getReference("Components");
                                     myref.child(unameval).child(componentval).child("component").setValue(componentval);
@@ -135,7 +147,6 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     );
                                 }
                             });
-
                 }
                 negativebut.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -145,13 +156,10 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                         Toast.makeText(context,"reject",Toast.LENGTH_SHORT).show();
                     }
                 });
-
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.show();
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
             }
         });
     }

@@ -11,5 +11,10 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
         />
+    <item
+        android:id="@+id/logs_icon"
+        android:icon="@drawable/ic_logs_black_24dp"
+        android:title="Logs"/>
+
 
 </menu>

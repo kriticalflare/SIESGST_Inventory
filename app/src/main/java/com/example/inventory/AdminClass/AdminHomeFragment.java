@@ -44,7 +44,6 @@ public class AdminHomeFragment extends Fragment  {
         home_recycler = (RecyclerView)view.findViewById(R.id.admin_home_recycler);
         home_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         firerefComp = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
-
         if(firerefComp!=null){
             firerefComp.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -61,13 +60,9 @@ public class AdminHomeFragment extends Fragment  {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
-
                 }
             });
         }
-
-
-
         return view;
     }
 

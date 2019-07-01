@@ -26,15 +26,15 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
 
     Dialog homeDialog;
     public Admin_Home_Adapter(ArrayList<ComponentModel> componentModel, Context context) {
-        this.componentModel = componentModel;
-        this.context = context;
+            this.componentModel = componentModel;
+            this.context = context;
     }
 
     @NonNull
     @Override
     public Admin_Home_ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_home_recycler_card,viewGroup,false);
-        Admin_Home_ViewHolder adminViewHold = new Admin_Home_ViewHolder(view);
+        final Admin_Home_ViewHolder adminViewHold = new Admin_Home_ViewHolder(view);
 
         homeDialog = new Dialog(context);
         homeDialog.setContentView(R.layout.admin_component_dialog);
@@ -47,10 +47,10 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
                 TextView admin_dialog_admin = (TextView)homeDialog.findViewById(R.id.admin_dialog_admin);
                 TextView admin_dialog_count = (TextView)homeDialog.findViewById(R.id.admin_count);
 
-                admin_dialog_component.setText(componentModel.get(i).getComponent());
-                admin_dialog_quantity.setText(String.valueOf(componentModel.get(i).getCount()));
-                admin_dialog_admin.setText(componentModel.get(i).getAdder());
-                admin_dialog_count.setText(String.valueOf(componentModel.get(i).getCount()));
+                admin_dialog_component.setText(componentModel.get(adminViewHold.getLayoutPosition()).getComponent());
+                admin_dialog_quantity.setText(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
+                admin_dialog_admin.setText(componentModel.get(adminViewHold.getLayoutPosition()).getAdder());
+                admin_dialog_count.setText(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
 
                 homeDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
                 homeDialog.show();

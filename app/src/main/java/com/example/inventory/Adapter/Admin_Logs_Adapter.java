@@ -1,6 +1,7 @@
 package com.example.inventory.Adapter;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,16 +41,23 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
         switch (logModel.get(i).getLogtype()){
             case 0:
                  admin_logs_viewHolder.LogType.setText("ACCEPTED");
-                 admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
+                Log.d("LogScreen", "onBindViewHolder: Logtype0");
+                admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
                  break;
             case 1:
                  admin_logs_viewHolder.LogType.setText("REJECTED");
+                 Log.d("LogScreen", "onBindViewHolder: Logtype1");
                  admin_logs_viewHolder.LogType.setTextColor(Color.RED);
                  break;
             case 2:
                  admin_logs_viewHolder.LogType.setText("ADDED");
+                 Log.d("LogScreen", "onBindViewHolder: Logtype2");
                  admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
                  break;
+            default:
+                admin_logs_viewHolder.LogType.setText("Contact admin");
+                Log.e("LogScreen", "onBindViewHolder: Logtype3");
+                admin_logs_viewHolder.LogType.setTextColor(Color.BLUE);
         }
     }
 

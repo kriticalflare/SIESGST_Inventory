@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class AdminHomeFragment extends Fragment {
+public class AdminHomeFragment extends Fragment  {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     RecyclerView home_recycler;
@@ -41,8 +42,9 @@ public class AdminHomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_home_fragment,container,false);
         home_recycler = (RecyclerView)view.findViewById(R.id.admin_home_recycler);
-
+        home_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         firerefComp = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
+
         if(firerefComp!=null){
             firerefComp.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -52,7 +54,7 @@ public class AdminHomeFragment extends Fragment {
                         for(DataSnapshot ds : dataSnapshot.getChildren()){
                             componentList.add(ds.getValue(ComponentModel.class));
                         }
-                        Admin_Home_Adapter admin_home_adapter = new Admin_Home_Adapter(componentList);
+                        Admin_Home_Adapter admin_home_adapter = new Admin_Home_Adapter(componentList, getContext() );
                         home_recycler.setAdapter(admin_home_adapter);
                     }
                 }
@@ -63,8 +65,6 @@ public class AdminHomeFragment extends Fragment {
                 }
             });
         }
-
-
 
         return view;
     }
@@ -115,7 +115,7 @@ public class AdminHomeFragment extends Fragment {
 
             }
         }
-        Admin_Home_Adapter home_adapter =  new Admin_Home_Adapter(searchlist);
+        Admin_Home_Adapter home_adapter =  new Admin_Home_Adapter(searchlist, getContext());
         home_recycler.setAdapter(home_adapter);
 
     }
@@ -131,6 +131,5 @@ public class AdminHomeFragment extends Fragment {
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
-
 
 }

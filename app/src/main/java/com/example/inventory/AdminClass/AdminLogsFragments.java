@@ -1,5 +1,6 @@
 package com.example.inventory.AdminClass;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,13 +8,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.inventory.Adapter.Admin_Logs_Adapter;
+import com.example.inventory.MainActivity;
+import com.example.inventory.Models.LogsModel;
 import com.example.inventory.Models.LogsModel;
 import com.example.inventory.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +42,7 @@ public class AdminLogsFragments extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_logs_fragment,container,false);
         logs_recycler = (RecyclerView)view.findViewById(R.id.admin_logs_recycler);
+        setHasOptionsMenu(true);
         firereflog = FirebaseDatabase.getInstance().getReference("Logs");
         if(firereflog!=null){
             firereflog.addValueEventListener(new ValueEventListener(){
@@ -63,4 +72,22 @@ public class AdminLogsFragments extends Fragment {
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.logout_menu,menu);
+        MenuItem logoutBut = menu.findItem(R.id.action_logout);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch ((item.getItemId())){
+            case R.id.action_logout:
+                Toast.makeText(getContext(),"signout",Toast.LENGTH_SHORT).show();
+                return true;
+             default:
+                 return super.onOptionsItemSelected(item);
+        }
+
+
+    }
 }

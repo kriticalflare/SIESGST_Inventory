@@ -39,16 +39,16 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
         //admin_logs_viewHolder.LogType.setText(String.valueOf(logModel.get(i).getLogtype()));
         switch (logModel.get(i).getLogtype()){
             case 0:
-                 admin_logs_viewHolder.LogType.setText("ACCEPTED");
-                 admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
+                 admin_logs_viewHolder.LogType.setText("ADDED");
+                 admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
                  break;
             case 1:
                  admin_logs_viewHolder.LogType.setText("REJECTED");
                  admin_logs_viewHolder.LogType.setTextColor(Color.RED);
                  break;
             case 2:
-                 admin_logs_viewHolder.LogType.setText("ADDED");
-                 admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
+                 admin_logs_viewHolder.LogType.setText("ACCCEPTED");
+                 admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
                  break;
         }
     }

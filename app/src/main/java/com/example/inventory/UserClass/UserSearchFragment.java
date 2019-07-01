@@ -17,13 +17,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.example.inventory.Adapter.Admin_Home_Adapter;
+import com.example.inventory.Adapter.User_Search_Adapter;
+import com.example.inventory.Models.ComponentModel;
 import com.example.inventory.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class UserSearchFragment extends Fragment {private SearchView searchView = null;
+import java.util.ArrayList;
+
+public class UserSearchFragment extends Fragment {
+    private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    SQLiteDatabase componentDatabase;
     RecyclerView search_recycler;
+    DatabaseReference firerefComp;
+    ArrayList<ComponentModel> componentList;
+
 
     @Nullable
     @Override
@@ -31,7 +45,27 @@ public class UserSearchFragment extends Fragment {private SearchView searchView 
         View view = inflater.inflate(R.layout.user_search_fragment,container,false);
         search_recycler = (RecyclerView)view.findViewById(R.id.user_search_recycler);
         search_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        firerefComp = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
+        if(firerefComp!=null){
+            firerefComp.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        componentList = new ArrayList<>();
+                        for(DataSnapshot ds: dataSnapshot.getChildren()){
+                            componentList.add(ds.getValue(ComponentModel.class));
+                        }
+                        User_Search_Adapter user_search_adapter = new User_Search_Adapter(componentList);
+                        search_recycler.setAdapter(user_search_adapter);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         return view;
     }
 
@@ -74,6 +108,16 @@ public class UserSearchFragment extends Fragment {private SearchView searchView 
     }
 
     private void searhComponets (String keyword){
+        ArrayList<ComponentModel> searchlist = new ArrayList<>();
+        for (ComponentModel object : componentList){
+            if (object.getComponent().toLowerCase().contains(keyword.toLowerCase())){
+                searchlist.add(object);
+
+            }
+        }
+        User_Search_Adapter search_adapter =  new User_Search_Adapter(searchlist);
+        search_recycler.setAdapter(search_adapter);
+
 
 
     }
@@ -82,7 +126,6 @@ public class UserSearchFragment extends Fragment {private SearchView searchView 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                // Not implemented here
                 return false;
             default:
                 break;

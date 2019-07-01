@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,76 +14,90 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.inventory.Models.ComponentModel;
 import com.example.inventory.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapter.
-        User_Search_View_Holder> {
-    private Context context;
+import java.util.ArrayList;
 
-    Dialog requestDialog;
-    public User_Search_Adapter(Context context){
-        this.context = context ;
+public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapter.User_Search_ViewHolder> {
+    ArrayList<ComponentModel> componentModel;
+    GoogleSignInClient mGoogleSignInClient;
+
+
+
+    public User_Search_Adapter(ArrayList<ComponentModel> componentModel){
+        this.componentModel = componentModel;
     }
+
     @NonNull
     @Override
-    public User_Search_View_Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater  inflater = LayoutInflater.from(context);
-        View view  = inflater.inflate(R.layout.user_search_recycler_card,viewGroup,false);
-        final User_Search_View_Holder user_search_view_holder= new User_Search_View_Holder(view);
+    public User_Search_ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_home_recycler_card,viewGroup,false);
+        User_Search_ViewHolder adminViewHold = new User_Search_ViewHolder(view);
 
-
-        requestDialog = new Dialog(context);
-        requestDialog.setContentView(R.layout.user_component_request_dialog);
-
-        user_search_view_holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView dialog_component = (TextView)requestDialog.findViewById(R.id.user_request_dialog_component);
-                TextView dialog_category = (TextView)requestDialog.findViewById(R.id.user_request_dialog_category);
-                TextView dialog_quantity = (TextView)requestDialog.findViewById(R.id.user_request_dialog_quantity);
-                TextView dialog_admin  = (TextView)requestDialog.findViewById(R.id.user_request_dialog_admin);
-                TextView dialog_count = (TextView)requestDialog.findViewById(R.id.request_count);
-
-
-                TextView comp_text = (TextView)v.findViewById(R.id.user_search_card_component);
-
-
-                dialog_component.setText(comp_text.getText());
-                Toast.makeText(context,"Clicked ; "+comp_text.getText(),Toast.LENGTH_SHORT).show();
-                requestDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                requestDialog.show();
-            }
-        });
-
-        return user_search_view_holder ;
+        return adminViewHold;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull User_Search_View_Holder user_search_view_holder, int i) {
+    public void onBindViewHolder(@NonNull final User_Search_ViewHolder user_search_viewHolder, final int i) {
+        user_search_viewHolder.Component.setText(componentModel.get(i).getComponent());
+        user_search_viewHolder.Count.setText(String.valueOf(componentModel.get(i).getCount()));
+        user_search_viewHolder.Card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+                mGoogleSignInClient = GoogleSignIn.getClient(user_search_viewHolder.context, gso);
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(user_search_viewHolder.context);
 
 
+
+
+                final Dialog dialog = new Dialog(user_search_viewHolder.context);
+                dialog.setContentView(R.layout.user_component_request_dialog);
+                dialog.setTitle("Request");
+                TextView com
+
+
+
+
+
+                dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+
+
+
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return componentModel.size();
     }
 
+    class User_Search_ViewHolder extends RecyclerView.ViewHolder{
+        TextView Component,Count;
+        CardView Card;
+        Context context;
 
-    public class User_Search_View_Holder extends RecyclerView.ViewHolder{
 
-        public TextView component,category,date,count,admin;
-        public CardView cardView;
-
-        public User_Search_View_Holder(@NonNull View itemView) {
+        public User_Search_ViewHolder(@NonNull View itemView) {
             super(itemView);
-            component = itemView.findViewById(R.id.user_search_card_component);
-            category = itemView.findViewById(R.id.user_search_card_category);
-            date = itemView.findViewById(R.id.user_search_card_date);
-            count = itemView.findViewById(R.id.user_search_card_count);
-            admin= itemView.findViewById(R.id.user_search_card_admin);
-            cardView = itemView.findViewById(R.id.user_search_card);
+            Component = itemView.findViewById(R.id.admin_home_card_component);
+            Count = itemView.findViewById(R.id.admin_home_card_count);
+            Card = itemView.findViewById(R.id.admin_home_card);
+            context  = itemView.getContext();
         }
     }
+
+
 }

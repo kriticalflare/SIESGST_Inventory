@@ -35,13 +35,12 @@ public class AdminHomeFragment extends Fragment {
     DatabaseReference firerefComp;
     ArrayList<ComponentModel> componentList;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_home_fragment,container,false);
         home_recycler = (RecyclerView)view.findViewById(R.id.admin_home_recycler);
-
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         firerefComp = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
         if(firerefComp!=null){
             firerefComp.addValueEventListener(new ValueEventListener() {
@@ -59,13 +58,9 @@ public class AdminHomeFragment extends Fragment {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
-
                 }
             });
         }
-
-
-
         return view;
     }
 

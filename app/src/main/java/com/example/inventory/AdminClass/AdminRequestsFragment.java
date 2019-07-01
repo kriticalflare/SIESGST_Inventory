@@ -68,17 +68,16 @@ public class AdminRequestsFragment extends Fragment {
                         }
                         finalRequestlist =new ArrayList<>();
                         if(componentlist!=null && requestlist!=null){
-
                             for(RequestModel request : requestlist){
                                 for(ComponentModel component : componentlist){
                                     if(request.getComponent().equals(component.getComponent())) {
                                         finalRequestlist.add(new FinalRequestModel(
                                                 request.getComponent(), request.getRequestcount(),
                                                 request.getUemail(), request.getUname(), request.getDatetime(),
-                                                component.getCount())); }}}}
+                                                component.getCount(),request.getRequesttype()));
+                                    }}}}
                         Admin_Requests_Adapter requests_adapter = new Admin_Requests_Adapter(finalRequestlist,getContext());
                         request_recycler.setAdapter(requests_adapter);
-
                     }
                 }
                 @Override
@@ -87,14 +86,6 @@ public class AdminRequestsFragment extends Fragment {
                 }
             });
         }
-
-
-
-
-
-
-
-
         return view;
 
     }

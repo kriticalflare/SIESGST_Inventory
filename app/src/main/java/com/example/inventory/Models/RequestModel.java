@@ -7,6 +7,16 @@ public class RequestModel {
     String uname;
     String datetime;
 
+    public String getRequesttype() {
+        return requesttype;
+    }
+
+    public void setRequesttype(String requesttype) {
+        this.requesttype = requesttype;
+    }
+
+    String requesttype;
+
     public RequestModel(){}
 
     public String getComponent() {
@@ -49,11 +59,13 @@ public class RequestModel {
         this.datetime = datetime;
     }
 
-    public RequestModel(String component, String requestcount, String uemail, String uname, String datetime) {
+    public RequestModel(String component, String requestcount, String uemail, String uname, String datetime,String requesttype) {
         this.component = component;
         this.requestcount = requestcount;
         this.uemail = uemail;
         this.uname = uname;
         this.datetime = datetime;
+        this.requesttype =requesttype;
+
     }
 }

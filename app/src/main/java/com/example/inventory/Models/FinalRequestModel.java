@@ -6,6 +6,15 @@ public class FinalRequestModel {
     String uemail;
     String uname;
     String datetime;
+    String requesttype;
+
+    public String getRequesttype() {
+        return requesttype;
+    }
+
+    public void setRequesttype(String requesttype) {
+        this.requesttype = requesttype;
+    }
 
     public FinalRequestModel() {}
 
@@ -57,13 +66,14 @@ public class FinalRequestModel {
         this.count = count;
     }
 
-    public FinalRequestModel(String component, String requestcount, String uemail, String uname, String datetime, Integer count) {
+    public FinalRequestModel(String component, String requestcount, String uemail, String uname, String datetime, Integer count,String requesttype) {
         this.component = component;
         this.requestcount = requestcount;
         this.uemail = uemail;
         this.uname = uname;
         this.datetime = datetime;
         this.count = count;
+        this.requesttype =requesttype;
     }
 
     Integer count;

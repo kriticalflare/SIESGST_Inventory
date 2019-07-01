@@ -60,6 +60,8 @@ public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapte
                         .build();
                 mGoogleSignInClient = GoogleSignIn.getClient(user_search_viewHolder.context, gso);
                 final GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(user_search_viewHolder.context);
+
+
                 final Dialog dialog = new Dialog(user_search_viewHolder.context);
                 dialog.setContentView(R.layout.user_component_request_dialog);
                 dialog.setTitle("Request");
@@ -105,6 +107,7 @@ public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapte
                         myref.child(dateString).child("requestcount").setValue(counter.getText());
                         myref.child(dateString).child("uname").setValue(account.getDisplayName());
                         myref.child(dateString).child("datetime").setValue(dateString);
+                        myref.child(dateString).child("requesttype").setValue("request");
                         dialog.dismiss();
                         Toast.makeText(user_search_viewHolder.context,"Request Sent",Toast.LENGTH_SHORT).show();
                     }

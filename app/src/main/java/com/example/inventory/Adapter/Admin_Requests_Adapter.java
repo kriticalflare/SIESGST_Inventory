@@ -114,7 +114,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     DatabaseReference Logsref;
                                     Logsref = FirebaseDatabase.getInstance().getReference("Logs");
                                     Logsref.child(datetimeval).child("component").setValue(componentval);
-                                    Logsref.child(datetimeval).child("count").setValue(request_count);
+                                    Logsref.child(datetimeval).child("count").setValue(Integer.parseInt(requestcountval));
                                     Logsref.child(datetimeval).child("datetime").setValue(datetimeval);
                                     Logsref.child(datetimeval).child("logtype").setValue(3);
                                     Logsref.child(datetimeval).child("uname").setValue(unameval);
@@ -132,7 +132,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     DatabaseReference Logsref;
                                     Logsref = FirebaseDatabase.getInstance().getReference("Logs");
                                     Logsref.child(datetimeval).child("component").setValue(componentval);
-                                    Logsref.child(datetimeval).child("count").setValue(request_count);
+                                    Logsref.child(datetimeval).child("count").setValue(Integer.parseInt(requestcountval));
                                     Logsref.child(datetimeval).child("datetime").setValue(datetimeval);
                                     Logsref.child(datetimeval).child("logtype").setValue(1);
                                     Logsref.child(datetimeval).child("uname").setValue(unameval);

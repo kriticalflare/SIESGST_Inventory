@@ -40,24 +40,24 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
         //admin_logs_viewHolder.LogType.setText(String.valueOf(logModel.get(i).getLogtype()));
         switch (logModel.get(i).getLogtype()){
             case 0:
-                 admin_logs_viewHolder.LogType.setText("ACCEPTED");
+                 admin_logs_viewHolder.LogType.setText("Added");
                 Log.d("LogScreen", "onBindViewHolder: Logtype0");
-                admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
+                admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
                  break;
             case 1:
-                 admin_logs_viewHolder.LogType.setText("REJECTED");
+                 admin_logs_viewHolder.LogType.setText("REQUEST ACCEPTED");
                  Log.d("LogScreen", "onBindViewHolder: Logtype1");
-                 admin_logs_viewHolder.LogType.setTextColor(Color.RED);
+                 admin_logs_viewHolder.LogType.setTextColor(Color.BLUE);
                  break;
             case 2:
-                 admin_logs_viewHolder.LogType.setText("ADDED");
+                 admin_logs_viewHolder.LogType.setText("REJECTED");
                  Log.d("LogScreen", "onBindViewHolder: Logtype2");
-                 admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
+                 admin_logs_viewHolder.LogType.setTextColor(Color.RED);
                  break;
-            default:
-                admin_logs_viewHolder.LogType.setText("Contact admin");
+            case 3:
+                admin_logs_viewHolder.LogType.setText("RETURN ACCEPTED");
                 Log.e("LogScreen", "onBindViewHolder: Logtype3");
-                admin_logs_viewHolder.LogType.setTextColor(Color.BLUE);
+                admin_logs_viewHolder.LogType.setTextColor(Color.GREEN);
         }
     }
 

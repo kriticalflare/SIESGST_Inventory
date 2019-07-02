@@ -108,8 +108,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     myref.child(unameval).child(componentval).child("adder").setValue(null);
                                     myref.child(unameval).child(componentval).child("count").setValue(null);
                                     myref.child("Admin").child(componentval).child("count").setValue(
-                                            Integer.parseInt(availcointval) + Integer.parseInt(requestcountval)
-                                    );
+                                            Integer.parseInt(availcointval) + Integer.parseInt(requestcountval));
 
                                     DatabaseReference Logsref;
                                     Logsref = FirebaseDatabase.getInstance().getReference("Logs");
@@ -120,6 +119,10 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     Logsref.child(datetimeval).child("uname").setValue(unameval);
                                     Toast.makeText(context,"return accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
+
+                                    //TODO Remove the entry from requests firebase
+
+                                    removeitem(position);
                                 }
                             });
                 }
@@ -143,8 +146,12 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     myref.child(unameval).child(componentval).child("adder").setValue(unameval);
                                     myref.child(unameval).child(componentval).child("count").setValue(Integer.parseInt(requestcountval));
                                     myref.child("Admin").child(componentval).child("count").setValue(
-                                            Integer.parseInt(availcointval) - Integer.parseInt(requestcountval)
-                                    );
+                                            Integer.parseInt(availcointval) - Integer.parseInt(requestcountval));
+
+                                    //TODO Remove the entry from Requests firebase
+
+                                    removeitem(position);
+
                                 }
                             });
                 }
@@ -154,6 +161,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                         dialog.dismiss();
 //                        deleteRequest(datetimeval);
                         Toast.makeText(context,"reject",Toast.LENGTH_SHORT).show();
+                        removeitem(position);
                     }
                 });
                 dialog.setCancelable(true);
@@ -172,6 +180,11 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
         myref.child(datetime).child("requesttype").setValue(null);
         myref.child(datetime).child("uemail").setValue(null);
         myref.child(datetime).child("uname").setValue(null);
+    }
+    public void removeitem(int position){
+        requestModel.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, requestModel.size());
     }
 
     @Override

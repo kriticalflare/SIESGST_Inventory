@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.inventory.Adapter.Admin_Home_Adapter;
 import com.example.inventory.Models.ComponentModel;
 import com.example.inventory.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +36,8 @@ public class AdminHomeFragment extends Fragment  {
     RecyclerView home_recycler;
     DatabaseReference firerefComp;
     ArrayList<ComponentModel> componentList;
+    private FloatingActionButton addComp;
+
 
 
     @Nullable
@@ -43,6 +46,8 @@ public class AdminHomeFragment extends Fragment  {
         View view = inflater.inflate(R.layout.admin_home_fragment,container,false);
         home_recycler = (RecyclerView)view.findViewById(R.id.admin_home_recycler);
         home_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        addComp = (FloatingActionButton)getActivity().findViewById(R.id.add_components);
+        addComp.show();
         firerefComp = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
         if(firerefComp!=null){
             firerefComp.addValueEventListener(new ValueEventListener() {
@@ -55,11 +60,27 @@ public class AdminHomeFragment extends Fragment  {
                         }
                         Admin_Home_Adapter admin_home_adapter = new Admin_Home_Adapter(componentList,getContext());
                         home_recycler.setAdapter(admin_home_adapter);
+                        home_recycler.addOnScrollListener(new RecyclerView.OnScrollListener(){
+                            @Override
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                                if (dy > 0)
+                                    addComp.hide();
+                                else if (dy < 0)
+                                    addComp.show();
+                            }
+                        });
+
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+            addComp.show(new FloatingActionButton.OnVisibilityChangedListener() {
+                @Override
+                public void onHidden(FloatingActionButton fab) {
+                    addComp.show();
                 }
             });
         }

@@ -18,6 +18,7 @@ import com.example.inventory.Models.ComponentModel;
 import com.example.inventory.Models.FinalRequestModel;
 import com.example.inventory.Models.RequestModel;
 import com.example.inventory.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +34,8 @@ public class AdminRequestsFragment extends Fragment {
     ArrayList<ComponentModel>componentlist;
     ArrayList<RequestModel>requestlist;
     ArrayList<FinalRequestModel>finalRequestlist;
+    private FloatingActionButton addComp;
+
     boolean one,two;
 
 
@@ -42,6 +45,7 @@ public class AdminRequestsFragment extends Fragment {
         View view = inflater.inflate(R.layout.admin_requests_fragment,container,false);
         request_recycler = (RecyclerView)view.findViewById(R.id.admin_request_recycler);
         request_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        addComp = (FloatingActionButton)getActivity().findViewById(R.id.add_components);
         compref = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
         if(compref!=null){
             compref.addValueEventListener(new ValueEventListener() {
@@ -78,11 +82,27 @@ public class AdminRequestsFragment extends Fragment {
                                     }}}}
                         Admin_Requests_Adapter requests_adapter = new Admin_Requests_Adapter(finalRequestlist,getContext());
                         request_recycler.setAdapter(requests_adapter);
+                        request_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                            @Override
+                            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                if (dy > 0)
+                                    addComp.hide();
+                                else if (dy < 0)
+                                    addComp.show();
+                            }
+                        });
+
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+            addComp.show(new FloatingActionButton.OnVisibilityChangedListener() {
+                @Override
+                public void onHidden(FloatingActionButton fab) {
+                    addComp.show();
                 }
             });
         }

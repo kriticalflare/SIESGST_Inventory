@@ -20,6 +20,7 @@ import com.example.inventory.MainActivity;
 import com.example.inventory.Models.LogsModel;
 import com.example.inventory.Models.LogsModel;
 import com.example.inventory.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,12 +37,15 @@ public class AdminLogsFragments extends Fragment {
     RecyclerView logs_recycler;
     ArrayList<LogsModel> logList;
     DatabaseReference firereflog;
+    private FloatingActionButton addComp;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.admin_logs_fragment,container,false);
         logs_recycler = (RecyclerView)view.findViewById(R.id.admin_logs_recycler);
+        addComp = (FloatingActionButton)getActivity().findViewById(R.id.add_components);
         setHasOptionsMenu(true);
         firereflog = FirebaseDatabase.getInstance().getReference("Logs");
         if(firereflog!=null){
@@ -55,6 +59,15 @@ public class AdminLogsFragments extends Fragment {
                        }
                        Admin_Logs_Adapter admin_logs_adapter = new Admin_Logs_Adapter(logList);
                        logs_recycler.setAdapter(admin_logs_adapter);
+                       logs_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                           @Override
+                           public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                               if (dy > 0)
+                                   addComp.hide();
+                               else if (dy < 0)
+                                   addComp.show();
+                           }
+                       });
                    }
                }
 
@@ -64,6 +77,12 @@ public class AdminLogsFragments extends Fragment {
 
                }
 
+            });
+            addComp.show(new FloatingActionButton.OnVisibilityChangedListener() {
+                @Override
+                public void onHidden(FloatingActionButton fab) {
+                    addComp.show();
+                }
             });
         }
 

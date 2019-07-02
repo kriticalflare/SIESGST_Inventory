@@ -87,18 +87,34 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
                 }else {
                     String item = admin_dialog_component.getText().toString();
                     String countString = admin_dialog_count.getText().toString();
-                    int count = Integer.parseInt(countString);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference databaseReference = database.getReference("Components");
-                    databaseReference.child("Admin").child(item).child("count").setValue(count);
+
+                    if(countString.equals("0")){
+                        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
+                        database.child(item).child("adder").setValue(null);
+                        database.child(item).child("component").setValue(null);
+                        database.child(item).child("count").setValue(null);
+                    }
+                    else {
+                        int count = Integer.parseInt(countString);
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference databaseReference = database.getReference("Components");
+                        databaseReference.child("Admin").child(item).child("count").setValue(count);
+
+                    }
+
+
+
+
                     //int ActualCount = Integer.parseInt(count);
                     //String test = admin_dialog_component.getText().toString();
-                    //Toast toast = new Toast(context).makeText(context,"number is "+ test +" .",Toast.LENGTH_SHORT);
+                    Toast toast = new Toast(context).makeText(context,"Data Updated" +
+                            "",Toast.LENGTH_SHORT);
                     //toast.show();
+                    homeDialog.dismiss();
 
                 }
 
-                homeDialog.dismiss();
+
             }
         });
 

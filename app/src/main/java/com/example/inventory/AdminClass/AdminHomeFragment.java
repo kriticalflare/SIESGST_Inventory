@@ -46,6 +46,21 @@ public class AdminHomeFragment extends Fragment  {
         View view = inflater.inflate(R.layout.admin_home_fragment,container,false);
         home_recycler = (RecyclerView)view.findViewById(R.id.admin_home_recycler);
         home_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        home_recycler.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0)
+                    addComp.hide();
+                else if (dy < 0)
+                    addComp.show();
+            }
+        });
+
         addComp = (FloatingActionButton)getActivity().findViewById(R.id.add_components);
         addComp.show();
         firerefComp = FirebaseDatabase.getInstance().getReference("Components").child("Admin");
@@ -60,16 +75,6 @@ public class AdminHomeFragment extends Fragment  {
                         }
                         Admin_Home_Adapter admin_home_adapter = new Admin_Home_Adapter(componentList,getContext());
                         home_recycler.setAdapter(admin_home_adapter);
-                        home_recycler.addOnScrollListener(new RecyclerView.OnScrollListener(){
-                            @Override
-                            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                                if (dy > 0)
-                                    addComp.hide();
-                                else if (dy < 0)
-                                    addComp.show();
-                            }
-                        });
-
                     }
                 }
                 @Override

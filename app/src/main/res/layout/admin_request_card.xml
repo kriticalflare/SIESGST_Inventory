@@ -68,7 +68,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="Availabel Count : "
+                android:text="Available Count : "
                 />
             <TextView
                 android:id="@+id/admin_request_card_requesttype"

@@ -42,7 +42,7 @@ public class Admin_Logs_Adapter extends RecyclerView.Adapter<Admin_Logs_Adapter.
             case 0:
                  admin_logs_viewHolder.LogType.setText("Added");
                 Log.d("LogScreen", "onBindViewHolder: Logtype0");
-                admin_logs_viewHolder.LogType.setTextColor(Color.YELLOW);
+                admin_logs_viewHolder.LogType.setTextColor(Color.MAGENTA);
                  break;
             case 1:
                  admin_logs_viewHolder.LogType.setText("REQUEST ACCEPTED");

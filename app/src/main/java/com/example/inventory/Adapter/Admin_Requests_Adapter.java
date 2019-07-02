@@ -70,7 +70,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                 String uemailval = (String) holder.uemail.getText();
                 final String datetimeval = (String) holder.datetime.getText();
                 final String requestcountval = (String) holder.requestcount.getText();
-                final String availcointval = (String) holder.count.getText();
+                final String availcountval = (String) holder.count.getText();
 
                 final Dialog dialog = new Dialog(holder.context);
                 dialog.setContentView(R.layout.admin_requests_dialog);
@@ -91,7 +91,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                 user_email.setText(uemailval);
                 datelog.setText(datetimeval);
                 request_count.setText(requestcountval);
-                avail_count.setText(availcointval);
+                avail_count.setText(availcountval);
 
 
                 if(requestModel.get(position).getRequesttype().equals("return")){
@@ -111,7 +111,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     myref.child(unameval).child(componentval).child("adder").setValue(null);
                                     myref.child(unameval).child(componentval).child("count").setValue(null);
                                     myref.child("Admin").child(componentval).child("count").setValue(
-                                            Integer.parseInt(availcointval) + Integer.parseInt(requestcountval));
+                                            Integer.parseInt(availcountval) + Integer.parseInt(requestcountval));
 
                                     DatabaseReference Logsref;
                                     Logsref = FirebaseDatabase.getInstance().getReference("Logs");
@@ -137,7 +137,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     DatabaseReference myref;
                                     myref =  FirebaseDatabase.getInstance().getReference("Components");
 
-                                    if(Integer.parseInt(availcointval) > Integer.parseInt(requestcountval)){
+                                    if(Integer.parseInt(availcountval) > Integer.parseInt(requestcountval)){
                                     Toast.makeText(context,"request accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     DatabaseReference Logsref;
@@ -153,7 +153,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     myref.child(unameval).child(componentval).child("adder").setValue(unameval);
                                     myref.child(unameval).child(componentval).child("count").setValue(Integer.parseInt(requestcountval));
                                     myref.child("Admin").child(componentval).child("count").setValue(
-                                            Integer.parseInt(availcointval) - Integer.parseInt(requestcountval));
+                                            Integer.parseInt(availcountval) - Integer.parseInt(requestcountval));
 
                                     //TODO Remove the entry from Requests firebase
 

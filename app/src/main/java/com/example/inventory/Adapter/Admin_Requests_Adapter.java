@@ -104,6 +104,9 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                 public void onClick(View v) {
                                     DatabaseReference myref;
                                     myref =  FirebaseDatabase.getInstance().getReference("Components");
+
+
+
                                     myref.child(unameval).child(componentval).child("component").setValue(null);
                                     myref.child(unameval).child(componentval).child("adder").setValue(null);
                                     myref.child(unameval).child(componentval).child("count").setValue(null);
@@ -130,6 +133,11 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                     positivebut.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+
+                                    DatabaseReference myref;
+                                    myref =  FirebaseDatabase.getInstance().getReference("Components");
+
+                                    if(Integer.parseInt(availcointval) > Integer.parseInt(requestcountval)){
                                     Toast.makeText(context,"request accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     DatabaseReference Logsref;
@@ -140,8 +148,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     Logsref.child(datetimeval).child("logtype").setValue(1);
                                     Logsref.child(datetimeval).child("uname").setValue(unameval);
 
-                                    DatabaseReference myref;
-                                    myref =  FirebaseDatabase.getInstance().getReference("Components");
+
                                     myref.child(unameval).child(componentval).child("component").setValue(componentval);
                                     myref.child(unameval).child(componentval).child("adder").setValue(unameval);
                                     myref.child(unameval).child(componentval).child("count").setValue(Integer.parseInt(requestcountval));
@@ -150,7 +157,10 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
 
                                     //TODO Remove the entry from Requests firebase
 
-                                    removeitem(position);
+                                    removeitem(position);}else{
+                                        Toast.makeText(context,unameval+" has requested for more items than currently available. Add components before approving request",Toast.LENGTH_LONG).show();
+
+                                    }
 
                                 }
                             });

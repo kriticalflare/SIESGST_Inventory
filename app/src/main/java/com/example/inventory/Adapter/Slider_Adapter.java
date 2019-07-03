@@ -33,7 +33,7 @@ public class Slider_Adapter extends PagerAdapter {
     };
     public  String[] slider_texts ={
             "Manage Database of All Components",
-            "Manage Detailed Logs of Request of Components",
+            "Manage Requests of Components",
             "Save Time in Organizing the Inventory "
     };
 

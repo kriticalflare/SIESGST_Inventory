@@ -123,7 +123,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     Toast.makeText(context,"return accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
 
-                                    //TODO Remove the entry from requests firebase
+                                    deleteRequest(datetimeval);
 
                                     removeitem(position);
                                 }
@@ -155,7 +155,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     myref.child("Admin").child(componentval).child("count").setValue(
                                             Integer.parseInt(availcountval) - Integer.parseInt(requestcountval));
 
-                                    //TODO Remove the entry from Requests firebase
+                                    deleteRequest(datetimeval);
 
                                     removeitem(position);}else{
                                         Toast.makeText(context,unameval+" has requested for more items than currently available. Add components before approving request",Toast.LENGTH_LONG).show();
@@ -169,7 +169,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-//                        deleteRequest(datetimeval);
+                        deleteRequest(datetimeval);
                         Toast.makeText(context,"reject",Toast.LENGTH_SHORT).show();
                         removeitem(position);
                     }

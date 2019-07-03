@@ -73,13 +73,15 @@ public class AdminRequestsFragment extends Fragment {
                         finalRequestlist =new ArrayList<>();
                         if(componentlist!=null && requestlist!=null){
                             for(RequestModel request : requestlist){
+                                if(componentlist!=null){
                                 for(ComponentModel component : componentlist){
+                                    if(request.getComponent()!=null && component.getComponent()!= null){
                                     if(request.getComponent().equals(component.getComponent())) {
                                         finalRequestlist.add(new FinalRequestModel(
                                                 request.getComponent(), request.getRequestcount(),
                                                 request.getUemail(), request.getUname(), request.getDatetime(),
                                                 component.getCount(),request.getRequesttype()));
-                                    }}}}
+                                    }}}}}}
                         Admin_Requests_Adapter requests_adapter = new Admin_Requests_Adapter(finalRequestlist,getContext());
                         request_recycler.setAdapter(requests_adapter);
                         request_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {

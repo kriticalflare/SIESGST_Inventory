@@ -60,9 +60,6 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
                 TextView admin_dialog_admin = (TextView)homeDialog.findViewById(R.id.admin_dialog_admin);
                 EditText admin_dialog_count = (EditText) homeDialog.findViewById(R.id.admin_count);
 
-                //String  number = admin_dialog_count.getText().toString();
-                //int number2 = Integer.parseInt(number);
-
                 admin_dialog_component.setText(componentModel.get(adminViewHold.getLayoutPosition()).getComponent());
                 admin_dialog_quantity.setText(String.valueOf(componentModel.get(adminViewHold.getLayoutPosition()).getCount()));
                 admin_dialog_admin.setText(componentModel.get(adminViewHold.getLayoutPosition()).getAdder());
@@ -101,9 +98,6 @@ public class Admin_Home_Adapter extends RecyclerView.Adapter<Admin_Home_Adapter.
                         databaseReference.child("Admin").child(item).child("count").setValue(count);
 
                     }
-
-
-
 
                     //int ActualCount = Integer.parseInt(count);
                     //String test = admin_dialog_component.getText().toString();

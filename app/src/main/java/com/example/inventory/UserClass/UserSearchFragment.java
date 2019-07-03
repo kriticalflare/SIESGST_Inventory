@@ -109,10 +109,11 @@ public class UserSearchFragment extends Fragment {
 
     private void searhComponets (String keyword){
         ArrayList<ComponentModel> searchlist = new ArrayList<>();
-        for (ComponentModel object : componentList){
-            if (object.getComponent().toLowerCase().contains(keyword.toLowerCase())){
+        if (componentList != null){
+            for (ComponentModel object : componentList){
+            if (object.getComponent().toLowerCase().contains(keyword.toLowerCase())) {
                 searchlist.add(object);
-
+                }
             }
         }
         User_Search_Adapter search_adapter =  new User_Search_Adapter(searchlist);

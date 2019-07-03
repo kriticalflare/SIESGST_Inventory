@@ -132,10 +132,11 @@ public class AdminHomeFragment extends Fragment  {
 
     private void searhComponets (String keyword){
         ArrayList<ComponentModel> searchlist = new ArrayList<>();
-        for (ComponentModel object : componentList){
-            if (object.getComponent().toLowerCase().contains(keyword.toLowerCase())){
+        if(componentList != null){
+            for (ComponentModel object : componentList){
+            if (object.getComponent().toLowerCase().contains(keyword.toLowerCase())) {
                 searchlist.add(object);
-
+                }
             }
         }
         Admin_Home_Adapter home_adapter =  new Admin_Home_Adapter(searchlist,getContext());

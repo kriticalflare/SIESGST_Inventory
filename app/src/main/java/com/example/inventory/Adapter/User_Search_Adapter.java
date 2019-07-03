@@ -87,7 +87,7 @@ public class User_Search_Adapter extends RecyclerView.Adapter<User_Search_Adapte
                     @Override
                     public void onClick(View v) {
                         int count  = Integer.parseInt(counter.getText().toString());
-                        if(count >0){
+                        if(count >1){
                             count= count - 1;
                             counter.setText(String.valueOf(count));
                         }

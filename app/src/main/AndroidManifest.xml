@@ -12,10 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AdminClass.Admin_Main">
+        <activity android:name=".AdminClass.Admin_Main"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".UserClass.User_Main" />
+        <activity android:name=".UserClass.User_Main"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".MainActivity"

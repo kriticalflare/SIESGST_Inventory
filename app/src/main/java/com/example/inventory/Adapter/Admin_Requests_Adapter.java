@@ -137,7 +137,7 @@ public class Admin_Requests_Adapter extends RecyclerView.Adapter<Admin_Requests_
                                     DatabaseReference myref;
                                     myref =  FirebaseDatabase.getInstance().getReference("Components");
 
-                                    if(Integer.parseInt(availcountval) > Integer.parseInt(requestcountval)){
+                                    if(Integer.parseInt(availcountval) >= Integer.parseInt(requestcountval)){
                                     Toast.makeText(context,"request accepted",Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     DatabaseReference Logsref;
